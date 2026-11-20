@@ -1,8 +1,8 @@
 # Accept a command to determine the size of the table (rows and columns)
 
 
-rows = 3
-columns = 3
+rows = 9
+columns = 9
 coords = []
 board = []
 
@@ -35,21 +35,23 @@ class Endpoint_Pair:
     self.endpoint2 = endpoint2
     
 # update board with the endpoint pair
-def Update_Board(endpoint_pair):
-  board[endpoint_pair.endpoint1.x][endpoint_pair.endpoint1.y] = 'P1'
-  board[endpoint_pair.endpoint2.x][endpoint_pair.endpoint2.y] = 'P2'
+def Update_Board(endpoint_pair, count):
+  board[endpoint_pair.endpoint1.x][endpoint_pair.endpoint1.y] = count
+  board[endpoint_pair.endpoint2.x][endpoint_pair.endpoint2.y] = count
 
-def main():
-  
-  
+def main():  
   init_board(rows, columns)
-  for row in board:
-    print(' '.join(row))
-    
-  P1 = Endpoint(0, 0)
-  P2 = Endpoint(2, 2)
-  endpoint_pair = Endpoint_Pair(P1, P2)
-  Update_Board(endpoint_pair)
+
+  endpoint_coordinates = [
+    ((0, 0), (2, 2)),
+    ((0, 2), (2, 0)),
+  ]
+
+  for pair_number, (first_coords, second_coords) in enumerate(endpoint_coordinates, start=1):
+    endpoint1 = Endpoint(*first_coords)
+    endpoint2 = Endpoint(*second_coords)
+    endpoint_pair = Endpoint_Pair(endpoint1, endpoint2)
+    Update_Board(endpoint_pair, str(pair_number))
 
   for row in board:
       print(' '.join(row))
